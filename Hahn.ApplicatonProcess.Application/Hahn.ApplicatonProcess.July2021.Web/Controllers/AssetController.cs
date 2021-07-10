@@ -29,14 +29,14 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetTodoItem(int id)
         {
-            var todoItem = await _context.User.FindAsync(id);
+            var user = await _context.User.FindAsync(id);
 
-            if (todoItem == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return todoItem;
+            return user;
         }
 
         [HttpPost]
@@ -45,7 +45,7 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
             _context.User.Add(userAsset);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTodoItem), new { name = userAsset.FirstName }, userAsset);
+            return CreatedAtAction(nameof(GetTodoItem), new { id = userAsset.Id }, userAsset);
         }
 
         [HttpPut("{id}")]
