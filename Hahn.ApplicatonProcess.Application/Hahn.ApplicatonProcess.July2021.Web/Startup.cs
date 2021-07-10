@@ -1,4 +1,5 @@
 using Hahn.ApplicatonProcess.July2021.Data;
+using Hahn.ApplicatonProcess.July2021.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,8 @@ namespace Hahn.ApplicatonProcess.July2021.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAssetRepository, AssetRepository>();
             services.AddDbContext<AssetDBContext>(opt => opt.UseInMemoryDatabase(databaseName: "database_name"));
             services.AddControllers();
             services.AddSwaggerGen(c =>

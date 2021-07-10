@@ -1,4 +1,5 @@
 ﻿using Hahn.ApplicatonProcess.July2021.Data;
+using Hahn.ApplicatonProcess.July2021.Domain;
 using Hahn.ApplicatonProcess.July2021.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,21 +14,22 @@ using System.Threading.Tasks;
 namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AssetController : ControllerBase
     {
         private readonly AssetDBContext _context;
-
         private readonly ILogger<AssetController> _logger;
+        private readonly IUserService _userService;
 
-        public AssetController(ILogger<AssetController> logger, AssetDBContext context)
+        public AssetController(ILogger<AssetController> logger, AssetDBContext context, IUserService userService)
         {
             _logger = logger;
             _context = context;
+            _userService = userService;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetTodoItem(int id)
+        public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
             var user = await _context.User.FindAsync(id);
 
@@ -36,22 +38,23 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
                 return NotFound();
             }
 
-            return user;
+            return (ActionResult<UserDTO>)user;
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> AddUser(User userAsset)
+        public async Task<ActionResult<int>> AddUser(UserDTO userAsset)
         {
-            _context.User.Add(userAsset);
-            await _context.SaveChangesAsync();
+            /*_context.User.Add(userAsset);
+             await _context.SaveChangesAsync();*/
+            await _userService.AddUser(userAsset);
 
-            return CreatedAtAction(nameof(GetTodoItem), new { id = userAsset.Id }, userAsset);
+            return CreatedAtAction(nameof(GetUser), new { id = userAsset.Id }, userAsset);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(long id, UserAsset userAsset)
+        public async Task<IActionResult> Put(long id, UserDTO userAsset)
         {
-            if (id != userAsset.ID)
+            if (id != userAsset.Id)
             {
                 return BadRequest();
             }
@@ -77,10 +80,19 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
-        public IActionResult Delete()
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(long id)
         {
-            return StatusCode(500);
+            var todoItem = await _context.User.FindAsync(id);
+            if (todoItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.User.Remove(todoItem);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         private bool AssetExists(long id) =>
