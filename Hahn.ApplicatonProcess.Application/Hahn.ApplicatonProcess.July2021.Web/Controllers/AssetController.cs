@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hahn.ApplicatonProcess.July2021.Data;
+using Hahn.ApplicatonProcess.July2021.Domain.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,41 +16,65 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
     [Route("[controller]")]
     public class AssetController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly AssetDBContext _context;
 
         private readonly ILogger<AssetController> _logger;
 
-        public AssetController(ILogger<AssetController> logger)
+        public AssetController(ILogger<AssetController> logger, AssetDBContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetTodoItem(int id)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var todoItem = await _context.User.FindAsync(id);
+
+            if (todoItem == null)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return NotFound();
+            }
+
+            return todoItem;
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public async Task<ActionResult<User>> AddUser(User userAsset)
         {
-            return StatusCode(201);
+            _context.User.Add(userAsset);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetTodoItem), new { name = userAsset.FirstName }, userAsset);
         }
 
-        [HttpPut]
-        public IActionResult Put()
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTodoItem(long id, UserAsset userAsset)
         {
-            return StatusCode(500);
+            if (id != userAsset.ID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(userAsset).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AssetExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         [HttpDelete]
@@ -55,5 +82,8 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         {
             return StatusCode(500);
         }
+
+        private bool AssetExists(long id) =>
+            _context.UserAsset.Any(e => e.ID == id);
     }
 }

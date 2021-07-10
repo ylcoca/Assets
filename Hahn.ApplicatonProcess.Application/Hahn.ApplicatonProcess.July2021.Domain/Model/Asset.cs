@@ -1,8 +1,13 @@
 ﻿using Hahn.ApplicatonProcess.July2021.Domain.Model;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Hahn.ApplicatonProcess.July2021.Domain
 {
+    [Table("Asset")]
     public class Asset
     {
+        [Key]
         public int Id { get; set; }
         public int Rank { get; set; }
         public string Name { get; set; }

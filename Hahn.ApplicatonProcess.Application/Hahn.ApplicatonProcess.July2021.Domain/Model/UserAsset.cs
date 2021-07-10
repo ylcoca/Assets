@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hahn.ApplicatonProcess.July2021.Domain.Model
 {
-    class UserAsset
+    [Table("UserAsset")]
+    public class UserAsset
     {
+        [Key]
         public int ID { get; set; }
         public Asset Asset { get; set; }
     }
