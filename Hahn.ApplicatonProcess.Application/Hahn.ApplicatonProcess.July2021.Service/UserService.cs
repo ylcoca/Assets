@@ -11,15 +11,20 @@ namespace Hahn.ApplicatonProcess.July2021.Domain
 {
     public class UserService : IUserService
     {
-        IAssetRepository _repository;
-        public UserService(IAssetRepository repository)
+        IUserRepository _repository;
+        public UserService(IUserRepository repository)
         {
             _repository = repository;
         }
 
-        public Task<ActionResult<int>> AddUser(UserDTO userAsset)
+        public Task<ActionResult<int>> AddUser(User userAsset)
         {
            return _repository.AddUser(userAsset);
+        }
+
+        public Task<ActionResult<UserDTO>> GetUser(int id)
+        {
+            return _repository.GetUser(id);
         }
     }
 }

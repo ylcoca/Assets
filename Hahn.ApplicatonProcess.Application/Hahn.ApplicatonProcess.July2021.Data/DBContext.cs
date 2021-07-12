@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace Hahn.ApplicatonProcess.July2021.Data
 {
-    public class AssetDBContext : DbContext
+    public class DBContext : DbContext
     {
-        public AssetDBContext(DbContextOptions<AssetDBContext> options):base(options)
+        public DBContext()
+        {
+        }
+
+        public DBContext(DbContextOptions<DBContext> options):base(options)
         {
 
         }

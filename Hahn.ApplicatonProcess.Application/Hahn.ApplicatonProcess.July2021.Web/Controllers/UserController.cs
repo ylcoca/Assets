@@ -15,13 +15,14 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AssetController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly AssetDBContext _context;
-        private readonly ILogger<AssetController> _logger;
+        private readonly DBContext _context;
+        private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
+        private UnitOfWork unitOfWork = new UnitOfWork();
 
-        public AssetController(ILogger<AssetController> logger, AssetDBContext context, IUserService userService)
+        public UserController(ILogger<UserController> logger, DBContext context, IUserService userService)
         {
             _logger = logger;
             _context = context;
@@ -31,23 +32,24 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDTO>> GetUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await unitOfWork.UserRepository.GetUser(id);
+            //var user = await _userService.GetUser(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            return (ActionResult<UserDTO>)user;
+            return user;
         }
 
         [HttpPost]
         public async Task<ActionResult<int>> AddUser(UserDTO userAsset)
         {
-            /*_context.User.Add(userAsset);
-             await _context.SaveChangesAsync();*/
-            await _userService.AddUser(userAsset);
+            /* await _userService.AddUser(userAsset);
+             return CreatedAtAction(nameof(GetUser), new { id = userAsset.Id }, userAsset);*/
 
+            await unitOfWork.UserRepository.AddUser(userAsset);
             return CreatedAtAction(nameof(GetUser), new { id = userAsset.Id }, userAsset);
         }
 

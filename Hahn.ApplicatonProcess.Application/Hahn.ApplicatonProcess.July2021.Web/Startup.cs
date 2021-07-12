@@ -30,7 +30,7 @@ namespace Hahn.ApplicatonProcess.July2021.Web
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAssetRepository, AssetRepository>();
-            services.AddDbContext<AssetDBContext>(opt => opt.UseInMemoryDatabase(databaseName: "database_name"));
+            services.AddDbContext<DBContext>(opt => opt.UseInMemoryDatabase(databaseName: "database_name"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

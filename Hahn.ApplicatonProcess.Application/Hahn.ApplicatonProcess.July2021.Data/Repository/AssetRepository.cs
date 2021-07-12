@@ -9,17 +9,10 @@ namespace Hahn.ApplicatonProcess.July2021.Data
 {
     public class AssetRepository : IAssetRepository
     {
-        private AssetDBContext context;
-        public AssetRepository(AssetDBContext context)
+        private DBContext context;
+        public AssetRepository(DBContext context)
         {
             this.context = context;
-        }
-
-        public async Task<ActionResult<int>> AddUser(User userAsset)
-        {
-            context.User.Add(userAsset);
-            int rowsAffected = await context.SaveChangesAsync();
-            return rowsAffected;
         }
 
         public void DeleteAsset(int Id)
