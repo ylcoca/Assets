@@ -28,7 +28,6 @@ namespace Hahn.ApplicatonProcess.July2021.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAssetRepository, AssetRepository>();
             services.AddDbContext<DBContext>(opt => opt.UseInMemoryDatabase(databaseName: "database_name"));
             services.AddControllers();

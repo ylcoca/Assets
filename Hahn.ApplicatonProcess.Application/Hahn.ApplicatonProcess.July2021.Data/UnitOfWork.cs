@@ -1,22 +1,28 @@
-﻿using System;
+﻿using Hahn.ApplicatonProcess.July2021.Data.Repository;
+using System;
 using System.Threading.Tasks;
 
 namespace Hahn.ApplicatonProcess.July2021.Data
 {
    public class UnitOfWork : IDisposable
     {
-        private readonly DBContext context = new();
-        IUserRepository _repository;
+        private readonly DBContext _context;
+        IUserAssetRepository _userAssetRepository;
 
-        public IUserRepository UserRepository
+        public UnitOfWork(DBContext context)
+        {
+            _context = context;
+        }
+
+        public IUserAssetRepository UserAssetRepository
         {
             get
             {
-                if (_repository == null)
+                if (_userAssetRepository == null)
                 {
-                    _repository = new UserRepository(context);
+                    _userAssetRepository = new UserAssetRepository(_context);
                 }
-                return _repository;
+                return _userAssetRepository;
             }
         }
         public void Dispose()
@@ -26,7 +32,7 @@ namespace Hahn.ApplicatonProcess.July2021.Data
 
         public async Task<int> SaveChangesAsync()
         {
-           return await context.SaveChangesAsync();
+           return await _context.SaveChangesAsync();
         }
     }
 }

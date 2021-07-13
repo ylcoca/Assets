@@ -1,4 +1,5 @@
-﻿using Hahn.ApplicatonProcess.July2021.Domain.Model;
+﻿using Hahn.ApplicatonProcess.July2021.Domain;
+using Hahn.ApplicatonProcess.July2021.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace Hahn.ApplicatonProcess.July2021.Data
 
         }
         public DbSet<UserAsset> UserAsset { get; set; }
+        public DbSet<Asset> Asset { get; set; }
         public DbSet<User> User { get; set; }
+        
     }
 }

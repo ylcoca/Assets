@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Hahn.ApplicatonProcess.July2021.Data\Hahn.ApplicatonProcess.July2021.Data.csproj" />
-    <ProjectReference Include="..\Hahn.ApplicatonProcess.July2021.Service\Hahn.ApplicatonProcess.July2021.Service.csproj" />
   </ItemGroup>
 
 </Project>
