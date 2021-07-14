@@ -1,14 +1,8 @@
 ﻿using Hahn.ApplicatonProcess.July2021.Data;
-using Hahn.ApplicatonProcess.July2021.Domain;
 using Hahn.ApplicatonProcess.July2021.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
@@ -87,7 +81,5 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
             await unitOfWork.UserAssetRepository.DeleteUserAsset(userAsset.Value);
             return Ok();
         }
-
-        );
     }
 }
