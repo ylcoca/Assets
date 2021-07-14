@@ -24,10 +24,9 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository
             await context.SaveChangesAsync();
         }
 
-        public async Task<ActionResult<UserAsset>> GetUserAsset(int Id)
+        public ActionResult<UserAsset> GetUserAsset(int Id)
         {
             var us = context.UserAsset.Include("Asset").Include("Asset.User").Where(ua => ua.ID == Id).FirstOrDefault();
-            //var a = context.UserAsset.Include(x => x.Asset).Include(x=>x.Asset.User).ToList();
             return us;
         }
 

@@ -30,9 +30,9 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserAsset>> GetUserAsset(int id)
+        public ActionResult<UserAsset> GetUserAsset(int id)
         {
-            var userAsset = await unitOfWork.UserAssetRepository.GetUserAsset(id);
+            var userAsset = unitOfWork.UserAssetRepository.GetUserAsset(id);
 
             if (userAsset == null)
             {
@@ -72,7 +72,7 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserAsset(int id)
         {
-            var userAsset = await unitOfWork.UserAssetRepository.GetUserAsset(id);
+            var userAsset = unitOfWork.UserAssetRepository.GetUserAsset(id);
 
             if (userAsset == null)
             {
