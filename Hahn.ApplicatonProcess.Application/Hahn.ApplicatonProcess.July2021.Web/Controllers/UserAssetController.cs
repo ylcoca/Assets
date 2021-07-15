@@ -1,5 +1,8 @@
-﻿using Hahn.ApplicatonProcess.July2021.Data;
+﻿using FluentValidation.Results;
+using Hahn.ApplicatonProcess.July2021.Data;
+using Hahn.ApplicatonProcess.July2021.Data.Repository;
 using Hahn.ApplicatonProcess.July2021.Domain.Model;
+using Hahn.ApplicatonProcess.July2021.Domain.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -14,6 +17,7 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         private readonly DBContext _context;
         private readonly ILogger<UserAssetController> _logger;
         private readonly UnitOfWork unitOfWork;
+        UserValidator validator;
 
         public UserAssetController(ILogger<UserAssetController> logger, DBContext context)
         {
@@ -25,8 +29,17 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> AddUserAsset(UserAsset userAsset)
         {
-            await unitOfWork.UserAssetRepository.InsertUserAsset(userAsset);
-            return CreatedAtAction(nameof(GetUserAsset), new { userAsset.ID }, userAsset);
+            var assets = HTTPDataAccess.Assets();
+            validator = new(assets);
+
+            ValidationResult results =   validator.Validate(userAsset);
+            if (results.IsValid)
+            {
+                await unitOfWork.UserAssetRepository.InsertUserAsset(userAsset);
+                return CreatedAtAction(nameof(GetUserAsset), new { userAsset.ID }, userAsset);
+            }
+            return BadRequest(results.Errors);
+               
         }
 
         [HttpGet("{id}")]

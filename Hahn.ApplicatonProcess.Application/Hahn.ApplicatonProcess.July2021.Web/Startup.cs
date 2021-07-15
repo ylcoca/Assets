@@ -31,9 +31,10 @@ namespace Hahn.ApplicatonProcess.July2021.Web
         {
             services.AddDbContext<DBContext>(opt => opt.UseInMemoryDatabase(databaseName: "database_name"));
             services.AddControllers()
-                    .AddFluentValidation(s =>
+                    .AddFluentValidation(configuration =>
                     {
-                        s.RegisterValidatorsFromAssemblyContaining<Startup>();
+                        configuration.RegisterValidatorsFromAssemblyContaining<Startup>();
+                        configuration.ImplicitlyValidateChildProperties = true;
                     });
             services.AddSwaggerGen(c =>
             {
