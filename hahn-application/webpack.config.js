@@ -45,11 +45,12 @@ module.exports = ({ production } = {}, {extractCss, analyze, tests, hmr, port, h
     }
   },
   entry: {
-    app: [
-      // Uncomment next line if you need to support IE11
-      // 'promise-polyfill/src/polyfill',
-      'aurelia-bootstrapper'
-    ]
+    app: ['aurelia-bootstrapper'],
+    vendor: [
+      'bluebird',
+      'jquery',
+      'bootstrap'
+    ],
   },
   mode: production ? 'production' : 'development',
   output: {
