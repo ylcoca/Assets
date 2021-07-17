@@ -54,6 +54,14 @@
                   Valid first name is required.
                 </div>
               </div>
+              <div class="col-sm-6">
+                <label for="volumeUsd24Hr" class="form-label">VolumeUsd24Hr</label>
+                <input type="text" class="form-control" id="volumeUsd24Hr" placeholder="" value="" required
+                  value.bind="userAsset.asset.volumeUsd24Hr">
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
 
               <div class="col-sm-6">
                 <label for="priceUsd" class="form-label">PriceUsd</label>
@@ -83,7 +91,16 @@
                 </div>
               </div>
 
-              <div class="col-12">
+              <div class="col-sm-6">
+                <label for="age" class="form-label">Age</label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required
+                  value.bind="userAsset.asset.user.age">
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+
+              <div class="col-sm-6">
                 <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
                 <input type="email" class="form-control" id="email" placeholder="you@example.com"
                 value.bind="userAsset.asset.user.email">
