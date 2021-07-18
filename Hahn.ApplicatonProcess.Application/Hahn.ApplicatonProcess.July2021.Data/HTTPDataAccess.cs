@@ -11,13 +11,22 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository
 
         public static AssetsVm Assets()
         {
-            client.DefaultRequestHeaders.Accept.Clear();
+            try
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
 
             HttpResponseMessage response = client.GetAsync($"https://api.coincap.io/v2/assets").Result;
             return JsonConvert.DeserializeObject<AssetsVm>(response.Content.ReadAsStringAsync().Result);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            
 		}
     }
 }
