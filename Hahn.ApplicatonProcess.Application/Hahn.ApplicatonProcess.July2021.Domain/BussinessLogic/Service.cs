@@ -9,14 +9,15 @@ namespace Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic
 {
     public class Service : IService
     {
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         UserValidator validator;
         private readonly DBContext _context;
 
-        public Service(DBContext context)
+        public Service(DBContext context, IUnitOfWork unitOfWork)
         {
             _context = context;
-            unitOfWork = new UnitOfWork(_context);
+            //unitOfWork = new UnitOfWork(_context);
+            _unitOfWork = unitOfWork;
         }
         public ValidationResult AddUserAsset(UserAsset userAsset)
         {
@@ -27,7 +28,7 @@ namespace Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic
 
                 if (results.IsValid)
                 {
-                    unitOfWork.UserAssetRepository.InsertUserAsset(userAsset);
+                    _unitOfWork.UserAssetRepository.InsertUserAsset(userAsset);
                     return null;
                 }
                 return results;
@@ -40,22 +41,22 @@ namespace Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic
 
         public ActionResult<UserAsset> GetUserAsset(int id)
         {            
-            return unitOfWork.UserAssetRepository.GetUserAsset(id);
+            return _unitOfWork.UserAssetRepository.GetUserAsset(id);
         }
 
         public void PutUserAsset(UserAsset modifiedUserAsset)
         {
-             unitOfWork.UserAssetRepository.UpdateUserAsset(modifiedUserAsset);
+            _unitOfWork.UserAssetRepository.UpdateUserAsset(modifiedUserAsset);
         }
 
         public void DeleteUserAsset(UserAsset userAsset)
         {
-            unitOfWork.UserAssetRepository.DeleteUserAsset(userAsset);
+            _unitOfWork.UserAssetRepository.DeleteUserAsset(userAsset);
         }
 
         public bool UserAssetExists(int id)
         {
-            return unitOfWork.UserAssetRepository.UserAssetExists(id);
+            return _unitOfWork.UserAssetRepository.UserAssetExists(id);
         }
     }
 }

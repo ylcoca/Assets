@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Hahn.ApplicatonProcess.July2021.Data
 {
-    interface IUnitOfWork
+   public interface IUnitOfWork
     {
-        Task<int> SaveChangesAsync();
+        IUserAssetRepository UserAssetRepository { get; }
+        void Commit();
+        void Rollback();
     }
 }

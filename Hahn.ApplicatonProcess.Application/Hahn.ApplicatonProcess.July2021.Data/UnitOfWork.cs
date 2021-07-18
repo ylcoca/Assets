@@ -1,6 +1,4 @@
 ﻿using Hahn.ApplicatonProcess.July2021.Data.Repository;
-using System;
-using System.Threading.Tasks;
 
 namespace Hahn.ApplicatonProcess.July2021.Data
 {
@@ -25,14 +23,10 @@ namespace Hahn.ApplicatonProcess.July2021.Data
                 return _userAssetRepository;
             }
         }
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        public void Commit()
+        { _context.SaveChanges(); }
 
-        public async Task<int> SaveChangesAsync()
-        {
-           return await _context.SaveChangesAsync();
-        }
+        public void Rollback()
+        { _context.Dispose(); }
     }
 }
