@@ -1,10 +1,10 @@
 
 export class User {
   public id: number;
-  public age: string;
+  public age: number;
   public firstName: string;
   public lastName: string;
-  public phone: string;
+  public phone: number;
   public address: string;
   public email: string;
 }
