@@ -1,8 +1,7 @@
-﻿using Hahn.ApplicatonProcess.July2021.Domain.Model;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Hahn.ApplicatonProcess.July2021.Domain
+namespace Hahn.ApplicatonProcess.July2021.Core.Model
 {
     [Table("Asset")]
     public class Asset

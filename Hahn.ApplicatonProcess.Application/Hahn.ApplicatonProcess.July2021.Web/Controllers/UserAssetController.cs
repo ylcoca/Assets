@@ -1,7 +1,6 @@
 ﻿using FluentValidation.Results;
+using Hahn.ApplicatonProcess.July2021.Core.Model;
 using Hahn.ApplicatonProcess.July2021.Data;
-using Hahn.ApplicatonProcess.July2021.Data.Repository;
-using Hahn.ApplicatonProcess.July2021.Domain.Model;
 using Hahn.ApplicatonProcess.July2021.Domain.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

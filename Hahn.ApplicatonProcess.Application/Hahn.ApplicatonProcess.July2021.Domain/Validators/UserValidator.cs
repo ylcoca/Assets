@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
-using Hahn.ApplicatonProcess.July2021.Domain.Model;
-using System.Linq;
+using Hahn.ApplicatonProcess.July2021.Core.Model;
 
 namespace Hahn.ApplicatonProcess.July2021.Domain.Validators
 {

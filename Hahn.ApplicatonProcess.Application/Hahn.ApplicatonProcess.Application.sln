@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hahn.ApplicatonProcess.July
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hahn.ApplicatonProcess.July2021.Domain", "Hahn.ApplicatonProcess.July2021.Domain\Hahn.ApplicatonProcess.July2021.Domain.csproj", "{15753CF5-E277-410B-8DC8-0CF7BC077955}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hahn.ApplicatonProcess.July2021.Core", "Core\Hahn.ApplicatonProcess.July2021.Core.csproj", "{465D50A7-B330-473C-A439-A487AA2A9D5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{15753CF5-E277-410B-8DC8-0CF7BC077955}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15753CF5-E277-410B-8DC8-0CF7BC077955}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15753CF5-E277-410B-8DC8-0CF7BC077955}.Release|Any CPU.Build.0 = Release|Any CPU
+		{465D50A7-B330-473C-A439-A487AA2A9D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{465D50A7-B330-473C-A439-A487AA2A9D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{465D50A7-B330-473C-A439-A487AA2A9D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{465D50A7-B330-473C-A439-A487AA2A9D5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

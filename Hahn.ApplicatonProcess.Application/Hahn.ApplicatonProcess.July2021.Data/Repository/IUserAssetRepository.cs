@@ -1,4 +1,4 @@
-﻿using Hahn.ApplicatonProcess.July2021.Domain.Model;
+﻿using Hahn.ApplicatonProcess.July2021.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

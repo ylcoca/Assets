@@ -1,5 +1,5 @@
 ﻿
-namespace Hahn.ApplicatonProcess.July2021.Domain.Model
+namespace Hahn.ApplicatonProcess.July2021.Core.Model
 {
     public class UserAssetDTO : UserAsset
     {

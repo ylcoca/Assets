@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Hahn.ApplicatonProcess.July2021.Data
 {
-   public class UnitOfWork : IDisposable
+   public class UnitOfWork :IUnitOfWork
     {
         private readonly DBContext _context;
         IUserAssetRepository _userAssetRepository;

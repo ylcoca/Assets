@@ -1,4 +1,4 @@
-﻿using Hahn.ApplicatonProcess.July2021.Domain.Model;
+﻿using Hahn.ApplicatonProcess.July2021.Core.Model;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
