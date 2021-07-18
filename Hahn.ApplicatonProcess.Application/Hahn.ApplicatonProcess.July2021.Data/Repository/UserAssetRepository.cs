@@ -32,9 +32,18 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository
 
         public async Task<ActionResult<int>> InsertUserAsset(UserAsset userAsset)
         {
-            context.UserAsset.Add(userAsset);
-            int rowsAffected = await context.SaveChangesAsync();
-            return rowsAffected;
+            try
+            {
+                context.UserAsset.Add(userAsset);
+                int rowsAffected = await context.SaveChangesAsync();
+                return rowsAffected;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public void UpdateUserAsset(UserAsset userAsset)

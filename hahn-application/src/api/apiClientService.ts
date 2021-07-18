@@ -1,13 +1,13 @@
-import { UserAsset } from './../entities/UserAsset';
+import { UserAsset } from '../entities/UserAsset';
 
-import { HttpClient, json } from 'aurelia-fetch-client';
+import { HttpClient} from 'aurelia-fetch-client';
 
 const httpClient = new HttpClient();
-const endpoint = 'http://localhost:50835/api/UserAsset';
+const endpoint = 'http://localhost:51885/api/UserAsset';
 
 httpClient.configure(config => {
   config
-    .withBaseUrl('api/')
+    .withBaseUrl('/')
     .withDefaults({
       credentials: 'same-origin',
       headers: {
@@ -29,19 +29,22 @@ httpClient.configure(config => {
 });
 export class APIClient {
 
-  getData(id: number): void {
+  getUserAssetData(id: number): void {
     httpClient.fetch(endpoint + '/' + id)
       .then(response => response.json())
       .then(data => {
         console.log(data);
       });
   }
-  postData(userAsset: UserAsset): void {
-    httpClient.fetch(endpoint, {
+  postData(userAsset: UserAsset){
+    return httpClient.fetch(endpoint, {
       method: "POST",
       body: JSON.stringify(userAsset)
     })
+  }
 
+  getAssetNameData(id: number): void {
+    httpClient.fetch("https://api.coincap.io/v2/assets")
       .then(response => response.json())
       .then(data => {
         console.log(data);

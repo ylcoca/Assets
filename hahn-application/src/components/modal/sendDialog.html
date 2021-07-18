@@ -1,0 +1,83 @@
+<template>
+  <ux-dialog>
+    <ux-dialog-body>
+      <div if.bind="!model.data.asset">
+        <h2>${message}</h2>
+      </div>
+      <section if.bind="userAsset.asset" class="text-center container">
+        <div class="row g-3">
+          <h4 class="mb-3">Asset</h4>
+          <div class="col-sm-6">
+            <label for="rank" class="form-label">Rank: </label>
+            <label>${userAsset.asset.rank}</label>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="name" class="form-label">Name: </label>
+            <label>${userAsset.asset.name}</label>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="supply" class="form-label">Supply: </label>
+            <label>${userAsset.asset.supply}</label>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="maxSupply" class="form-label">MaxSupply: </label>
+            <label>${userAsset.asset.maxSupply}</label>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="marketCapUsd" class="form-label">MarketCapUsd: </label>
+            <label>${userAsset.asset.marketCapUsd}</label>
+          </div>
+          <div class="col-sm-6">
+            <label for="volumeUsd24Hr" class="form-label">VolumeUsd24Hr: </label>
+            <label>${userAsset.asset.volumeUsd24Hr}</label>
+          </div>
+          <div class="col-sm-6">
+            <label for="priceUsd" class="form-label">PriceUsd:</label>
+            <label>${userAsset.asset.priceUsd}</label>
+          </div>
+
+          <h4 class="mb-3">User</h4>
+          <div class="col-sm-6">
+            <label for="firstName" class="form-label">First name: </label>
+            <label>${userAsset.asset.user.firstName}</label>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="lastName" class="form-label">Last name: </label>
+            <label>${userAsset.asset.user.lastName}</label>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="age" class="form-label">Age: </label>
+            <label>${userAsset.asset.user.age}</label>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="email" class="form-label">Email: </label>
+            <label>${userAsset.asset.user.email}</label>
+          </div>
+
+          <div class="col-12">
+            <label for="address" class="form-label">Address: </label>
+            <label>${userAsset.asset.user.address}</label>
+          </div>
+        </div>
+      </section>
+    </ux-dialog-body>
+
+    <ux-dialog-footer>
+      <section class="text-center container">
+        <div class="row">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <button class="btn btn-secondary my-2" click.delegate="ok()">OK</button>
+            </p>
+          </div>
+        </div>
+      </section>
+    </ux-dialog-footer>
+  </ux-dialog>
+</template>

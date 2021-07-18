@@ -8,8 +8,7 @@ namespace Hahn.ApplicatonProcess.July2021.Domain
     public class Asset
     {
         [Key]
-        public string assetId { get; set; }
-        public string Id { get; set; }
+        public int Id { get; set; }
         public int Rank { get; set; }
         public string Symbol { get; set; }
         public string Name { get; set; }

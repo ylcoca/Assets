@@ -4,6 +4,7 @@ import { DialogService } from 'aurelia-dialog';
 
 import { autoinject } from "aurelia-framework";
 import { Dialog } from 'components/modal/resetDialog';
+import { SendDialog } from 'components/modal/sendDialog';
 
 @autoinject
 export class App {
@@ -26,12 +27,20 @@ export class App {
   submit(): void {
     this.setAddress()
     if (this.userAsset.asset) {
-      this.userAsset.asset.id = this.userAsset.asset.name.toLowerCase();
+     // this.userAsset.asset.id = this.userAsset.asset.name.toLowerCase();
      
       this.api.postData(this.userAsset)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
+        this.dialogService.open({
+          viewModel: SendDialog,
+          model: {
+            data
+          }
+        }).then(response => {
+          console.log(response);
+        });
       });
     }
   }
