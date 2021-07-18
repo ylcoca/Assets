@@ -1,6 +1,7 @@
 using FluentValidation.AspNetCore;
 using Hahn.ApplicatonProcess.July2021.Data;
 using Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic;
+using Hahn.ApplicatonProcess.July2021.Root;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,8 +26,7 @@ namespace Hahn.ApplicatonProcess.July2021.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DBContext>(opt => opt.UseInMemoryDatabase(databaseName: "database_name"));
-            services.AddScoped<IService, Service>();
+            CompositionRoot.injectDependencies(services);
 
             services.AddCors(options =>
             {

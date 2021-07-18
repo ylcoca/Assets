@@ -107,7 +107,7 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
                 {
                     return NotFound();
                 }
-                _service.DeleteUserAsset(userAsset.Value)
+                _service.DeleteUserAsset(userAsset.Value);
                 return Ok();
             }
             catch (System.Exception)
