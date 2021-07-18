@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Hahn.ApplicatonProcess.July2021.Core.csproj" />
+    <ProjectReference Include="..\Hahn.ApplicatonProcess.July2021.Data\Hahn.ApplicatonProcess.July2021.Data.csproj" />
   </ItemGroup>
 
 </Project>

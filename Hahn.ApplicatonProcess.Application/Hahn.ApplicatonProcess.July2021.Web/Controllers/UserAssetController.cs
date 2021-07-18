@@ -1,7 +1,6 @@
 ﻿using FluentValidation.Results;
 using Hahn.ApplicatonProcess.July2021.Core.Model;
-using Hahn.ApplicatonProcess.July2021.Data;
-using Hahn.ApplicatonProcess.July2021.Domain.Validators;
+using Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -13,31 +12,30 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
     [Route("api/[controller]")]
     public class UserAssetController : ControllerBase
     {
-        private readonly DBContext _context;
         private readonly ILogger<UserAssetController> _logger;
-        private readonly UnitOfWork unitOfWork;
-        UserValidator validator;
+        private readonly IService _service;
 
-        public UserAssetController(ILogger<UserAssetController> logger, DBContext context)
+
+        public UserAssetController(ILogger<UserAssetController> logger, IService service)
         {
             _logger = logger;
-            _context = context;
-            unitOfWork  = new UnitOfWork(_context);
+            _service = service;
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> AddUserAsset(UserAsset userAsset)
+        public IActionResult AddUserAsset(UserAsset userAsset)
         {
             try
             {
-                validator = new();
-                ValidationResult results = validator.Validate(userAsset);
-                if (results.IsValid)
+                var results = _service.AddUserAsset(userAsset);
+               if (results == null)
                 {
-                    await unitOfWork.UserAssetRepository.InsertUserAsset(userAsset);
                     return CreatedAtAction(nameof(GetUserAsset), new { userAsset.ID }, userAsset);
                 }
-                return BadRequest(results.Errors);
+                else
+                {
+                    return BadRequest(results.Errors);
+                }
             }
             catch (System.Exception e)
             {
@@ -52,54 +50,72 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         [HttpGet("{id}")]
         public ActionResult<UserAsset> GetUserAsset(int id)
         {
-            var userAsset = unitOfWork.UserAssetRepository.GetUserAsset(id);
-
-            if (userAsset == null)
-            {
-                return NotFound();
-            }
-
-            return userAsset;
-        }        
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserAsset(int id, UserAsset modifiedUserAsset)
-        {            
-            if (id != modifiedUserAsset.ID)
-            {
-                return BadRequest();
-            }         
-
             try
             {
-                unitOfWork.UserAssetRepository.UpdateUserAsset(modifiedUserAsset);                
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!unitOfWork.UserAssetRepository.UserAssetExists(id))
+                var result = _service.GetUserAsset(id);
+
+                if (result == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                return result;
             }
+            catch (System.Exception)
+            {
 
-            return NoContent();
+                //LogException(e);
+                return StatusCode(500);
+            }
+             
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult PutUserAsset(int id, UserAsset modifiedUserAsset)
+        {
+              if (id != modifiedUserAsset.ID)
+              {
+                  return BadRequest();
+              }         
+
+              try
+              {                
+                _service.PutUserAsset(modifiedUserAsset);
+                return Ok();
+              }
+              catch (DbUpdateConcurrencyException)
+              {
+                  if (!_service.UserAssetExists(id))
+                  {
+                      return NotFound();
+                  }
+                  else
+                  {
+                      //LogException(e);
+                  return StatusCode(500);
+                  }
+              }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserAsset(int id)
+        public IActionResult DeleteUserAsset(int id)
         {
-            var userAsset = unitOfWork.UserAssetRepository.GetUserAsset(id);
-
-            if (userAsset == null)
+            try
             {
-                return NotFound();
+                var userAsset = _service.GetUserAsset(id);
+
+                if (userAsset == null)
+                {
+                    return NotFound();
+                }
+                _service.DeleteUserAsset(userAsset.Value)
+                return Ok();
             }
-            await unitOfWork.UserAssetRepository.DeleteUserAsset(userAsset.Value);
-            return Ok();
+            catch (System.Exception)
+            {
+                //LogException(e);
+                return StatusCode(500);
+            }
+            
         }
     }
 }

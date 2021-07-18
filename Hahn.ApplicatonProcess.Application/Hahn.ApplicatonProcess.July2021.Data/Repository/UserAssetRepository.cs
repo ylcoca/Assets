@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,8 +24,17 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository
 
         public ActionResult<UserAsset> GetUserAsset(int Id)
         {
-            var us = context.UserAsset.Include("Asset").Include("Asset.User").Where(ua => ua.ID == Id).FirstOrDefault();
-            return us;
+            try
+            {
+                return context.UserAsset.Include("Asset").Include("Asset.User").Where(ua => ua.ID == Id).FirstOrDefault();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+            
         }
 
         public async Task<ActionResult<int>> InsertUserAsset(UserAsset userAsset)
@@ -47,8 +55,17 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository
 
         public void UpdateUserAsset(UserAsset userAsset)
         {
-            context.Entry(userAsset).State = EntityState.Modified;
-            context.SaveChanges();
+            try
+            {
+                context.Entry(userAsset).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
 
         public bool UserAssetExists(int id) =>
