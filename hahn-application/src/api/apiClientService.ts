@@ -4,7 +4,7 @@ import { HttpClient} from 'aurelia-fetch-client';
 
 const httpClient = new HttpClient();
 const endpoint = 'http://localhost:51885/api/UserAsset';
-
+/*
 httpClient.configure(config => {
   config
     .withBaseUrl('/')
@@ -26,7 +26,7 @@ httpClient.configure(config => {
         return response;
       }
     });
-});
+});*/
 export class APIClient {
 
   getUserAssetData(id: number): void {
@@ -43,12 +43,9 @@ export class APIClient {
     })
   }
 
-  getAssetNameData(id: number): void {
-    httpClient.fetch("https://api.coincap.io/v2/assets")
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      });
+  getAssetNameData(){
+    return httpClient.fetch("https://api.coincap.io/v2/assets")
+    
   }
 
 

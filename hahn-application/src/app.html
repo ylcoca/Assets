@@ -19,13 +19,22 @@
                 </div>
               </div>
 
-              <div class="col-sm-6">
+             <!--<div class="col-sm-6">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" placeholder="" value="" required
                   value.bind="userAsset.asset.name">
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
+              </div>-->
+              <div class="col-sm-6">
+                <label for="name" class="form-label">Name</label>
+                <select class="form-select" aria-label="Default select example" value.bind="userAsset.asset.name">
+                  <option model.bind="null" value="" selected disabled>Please select</option>
+                  <option " repeat.for="asset of assets" model.bind="asset.name">
+                    ${asset.name}
+                  </option>
+                </select>
               </div>
 
               <div class="col-sm-6">

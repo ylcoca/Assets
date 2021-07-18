@@ -1,7 +1,7 @@
 import { User } from "./User";
 
 export class Asset {
-  public id: string;
+  public id: number;
   public rank: number;
   public name: string;
   public supply: number;

@@ -1,3 +1,4 @@
+import { Asset } from './entities/Asset';
 import { UserAsset } from './entities/UserAsset';
 import { APIClient } from 'api/apiClientService';
 import { DialogService } from 'aurelia-dialog';
@@ -7,6 +8,7 @@ import { Dialog } from 'components/modal/resetDialog';
 import { SendDialog } from 'components/modal/sendDialog';
 import { ValidationController, ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 import { BootstrapFormRenderer } from 'bootstrap-form-renderer';
+import { User } from 'entities/User';
 
 @autoinject
 export class App {
@@ -20,10 +22,27 @@ export class App {
   _dialogService: DialogService
   controller: ValidationController = null;
 
-
+  assets: Asset[] = [
+    {
+      id: 0,
+      name: 'Motherboard',
+      rank: 1,
+      supply: 0,
+      marketCapUsd: 0,
+      maxSupply: 0,
+      volumeUsd24Hr: 0,
+      priceUsd: 0,
+      user:new User()
+    }
+  ];
   constructor(private dialogService: DialogService, private api: APIClient, private controllerFactory: ValidationControllerFactory) {
     this.userAsset = new UserAsset();
     this._dialogService = this.dialogService;
+    this.api.getAssetNameData().then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.assets = data.data
+      });
   }
 
 
