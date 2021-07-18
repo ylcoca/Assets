@@ -5,6 +5,8 @@ import { DialogService } from 'aurelia-dialog';
 import { autoinject } from "aurelia-framework";
 import { Dialog } from 'components/modal/resetDialog';
 import { SendDialog } from 'components/modal/sendDialog';
+import { ValidationController, ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
+import { BootstrapFormRenderer } from 'bootstrap-form-renderer';
 
 @autoinject
 export class App {
@@ -16,32 +18,35 @@ export class App {
   public zip: string;
 
   _dialogService: DialogService
+  controller: ValidationController = null;
 
 
-  constructor(private dialogService: DialogService, private api: APIClient) { }
-  attached(): void {
+  constructor(private dialogService: DialogService, private api: APIClient, private controllerFactory: ValidationControllerFactory) {
     this.userAsset = new UserAsset();
     this._dialogService = this.dialogService;
   }
 
+
   submit(): void {
+    this.controller = this.controllerFactory.createForCurrentScope();
+    this.controller.addRenderer(new BootstrapFormRenderer());
+    this.controller.validate();
+
     this.setAddress()
     if (this.userAsset.asset) {
-     // this.userAsset.asset.id = this.userAsset.asset.name.toLowerCase();
-     
+
       this.api.postData(this.userAsset)
-      .then(response => response.json())
-      .then(data => {
-        //console.log(data);
-        this.dialogService.open({
-          viewModel: SendDialog,
-          model: {
-            data
-          }
-        }).then(response => {
-          console.log(response);
+        .then(response => response.json())
+        .then(data => {
+          this.dialogService.open({
+            viewModel: SendDialog,
+            model: {
+              data
+            }
+          }).then(response => {
+            console.log(response);
+          });
         });
-      });
     }
   }
 
@@ -60,9 +65,9 @@ export class App {
     });
   }
 
-  resetAction(userAsset:UserAsset): void {
+  resetAction(userAsset: UserAsset): void {
     //reset all fields
-    
+
     this.userAsset = userAsset;
     this.userAsset.asset.rank = null;
     this.userAsset.asset.name = "";
@@ -87,3 +92,6 @@ export class App {
   }
 }
 
+ValidationRules
+  .ensure('zip').required()
+  .on(App);

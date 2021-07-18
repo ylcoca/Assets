@@ -10,4 +10,5 @@ export class Asset {
   public volumeUsd24Hr: number;
   public priceUsd: number;
   public user: User;
+
 }

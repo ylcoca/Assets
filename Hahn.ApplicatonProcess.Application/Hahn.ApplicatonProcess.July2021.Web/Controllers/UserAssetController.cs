@@ -29,16 +29,24 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> AddUserAsset(UserAsset userAsset)
         {
-            var assets = HTTPDataAccess.Assets();
-            validator = new(assets);
-
-            ValidationResult results =   validator.Validate(userAsset);
-            if (results.IsValid)
+            try
             {
-                await unitOfWork.UserAssetRepository.InsertUserAsset(userAsset);
-                return CreatedAtAction(nameof(GetUserAsset), new { userAsset.ID }, userAsset);
+                validator = new();
+                ValidationResult results = validator.Validate(userAsset);
+                if (results.IsValid)
+                {
+                    await unitOfWork.UserAssetRepository.InsertUserAsset(userAsset);
+                    return CreatedAtAction(nameof(GetUserAsset), new { userAsset.ID }, userAsset);
+                }
+                return BadRequest(results.Errors);
             }
-            return BadRequest(results.Errors);
+            catch (System.Exception e)
+            {
+
+                //LogException(e);
+                return StatusCode(500);
+            }
+            
                
         }
 

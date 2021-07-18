@@ -14,7 +14,8 @@ export class SendDialog {
   activate(model: any) {
     
     if (!model.data.asset) {
-      this.message = model.data.title;
+      
+      this.message = model.data.title ? model.data.title : model.data[0].errorMessage;
     } else {
       this.userAsset = model.data;
     }
