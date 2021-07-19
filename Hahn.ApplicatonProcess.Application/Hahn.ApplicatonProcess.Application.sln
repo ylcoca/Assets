@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hahn.ApplicatonProcess.July
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hahn.ApplicatonProcess.July2021.Root", "CompositionRoot\Hahn.ApplicatonProcess.July2021.Root.csproj", "{A89E2764-9FD3-418C-9591-B06C6DB68648}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hahn.ApplicatonProcess.UnitTest", "Hahn.ApplicatonProcess.UnitTest\Hahn.ApplicatonProcess.UnitTest.csproj", "{32537AA6-4EC2-4C91-9314-1AC95BC715DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A89E2764-9FD3-418C-9591-B06C6DB68648}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A89E2764-9FD3-418C-9591-B06C6DB68648}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A89E2764-9FD3-418C-9591-B06C6DB68648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32537AA6-4EC2-4C91-9314-1AC95BC715DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32537AA6-4EC2-4C91-9314-1AC95BC715DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32537AA6-4EC2-4C91-9314-1AC95BC715DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32537AA6-4EC2-4C91-9314-1AC95BC715DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

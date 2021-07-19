@@ -11,12 +11,9 @@ namespace Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic
     {
         private readonly IUnitOfWork _unitOfWork;
         UserValidator validator;
-        private readonly DBContext _context;
 
-        public Service(DBContext context, IUnitOfWork unitOfWork)
+        public Service(IUnitOfWork unitOfWork)
         {
-            _context = context;
-            //unitOfWork = new UnitOfWork(_context);
             _unitOfWork = unitOfWork;
         }
         public ValidationResult AddUserAsset(UserAsset userAsset)
