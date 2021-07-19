@@ -4,7 +4,6 @@ using Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
 {
@@ -27,20 +26,23 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         {
             try
             {
+                _logger.LogInformation($"AddUserAsset asset: {Newtonsoft.Json.JsonConvert.SerializeObject(userAsset)}");
                 var results = _service.AddUserAsset(userAsset);
                if (results == null)
                 {
+                    _logger.LogInformation($"Usser asset created successfully");
                     return CreatedAtAction(nameof(GetUserAsset), new { userAsset.ID }, userAsset);
                 }
                 else
                 {
+                    _logger.LogInformation($"Bad Request on AddUserAsset asset: {Newtonsoft.Json.JsonConvert.SerializeObject(userAsset)}, errors {results.Errors}");
                     return BadRequest(results.Errors);
                 }
             }
             catch (System.Exception e)
             {
 
-                //LogException(e);
+                _logger.LogError(e.Message);
                 return StatusCode(500);
             }
             
@@ -52,18 +54,20 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         {
             try
             {
+                _logger.LogInformation($"GetUserAsset id: {id}");
                 var result = _service.GetUserAsset(id);
 
                 if (result == null)
                 {
+                    _logger.LogInformation($"GetUserAsset id: {id} not found");
                     return NotFound();
                 }
                 return result;
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
 
-                //LogException(e);
+                _logger.LogError(e.Message);
                 return StatusCode(500);
             }
              
@@ -72,26 +76,30 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         [HttpPut("{id}")]
         public IActionResult PutUserAsset(int id, UserAsset modifiedUserAsset)
         {
-              if (id != modifiedUserAsset.ID)
+            _logger.LogInformation($"PutUserAsset id: {id} and asset: {Newtonsoft.Json.JsonConvert.SerializeObject(modifiedUserAsset)}");
+            if (id != modifiedUserAsset.ID)
               {
-                  return BadRequest();
+                _logger.LogInformation($"PutUserAsset Bad request ID does not match");
+                return BadRequest();
               }         
 
               try
               {                
                 _service.PutUserAsset(modifiedUserAsset);
+                _logger.LogInformation($"PutUserAsset id: {id} successful");
                 return Ok();
               }
-              catch (DbUpdateConcurrencyException)
+              catch (DbUpdateConcurrencyException e)
               {
                   if (!_service.UserAssetExists(id))
                   {
-                      return NotFound();
+                    _logger.LogInformation($"UserAsset id: {id} not found");
+                    return NotFound();
                   }
                   else
                   {
-                      //LogException(e);
-                  return StatusCode(500);
+                    _logger.LogError(e.Message);
+                    return StatusCode(500);
                   }
               }
         }
@@ -101,18 +109,20 @@ namespace Hahn.ApplicatonProcess.July2021.Web.Controllers
         {
             try
             {
+                _logger.LogInformation($"DeleteUserAsset id: {id}");
                 var userAsset = _service.GetUserAsset(id);
 
                 if (userAsset == null)
                 {
                     return NotFound();
-                }
+                }                
                 _service.DeleteUserAsset(userAsset.Value);
+                _logger.LogInformation($"Succesfully Deleted UserAsset id: {id}");
                 return Ok();
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-                //LogException(e);
+                _logger.LogError(e.Message);
                 return StatusCode(500);
             }
             

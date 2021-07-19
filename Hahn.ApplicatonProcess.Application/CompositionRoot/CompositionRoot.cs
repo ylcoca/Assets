@@ -13,7 +13,7 @@ namespace Hahn.ApplicatonProcess.July2021.Root
 
         }
 
-        public static void injectDependencies(IServiceCollection services)
+        public static void InjectDependencies(IServiceCollection services)
         {
             services.AddDbContext<DBContext>(opt => opt.UseInMemoryDatabase(databaseName: "user_asset_db"));
             services.AddScoped<DBContext>();

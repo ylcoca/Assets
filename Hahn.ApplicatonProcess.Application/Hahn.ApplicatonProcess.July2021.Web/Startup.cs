@@ -1,14 +1,12 @@
 using FluentValidation.AspNetCore;
-using Hahn.ApplicatonProcess.July2021.Data;
-using Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic;
 using Hahn.ApplicatonProcess.July2021.Root;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace Hahn.ApplicatonProcess.July2021.Web
 {
@@ -23,11 +21,20 @@ namespace Hahn.ApplicatonProcess.July2021.Web
 
         readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+
+        private static ILogger BuildLogger(IConfiguration configuration)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
+            return Log.Logger;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            CompositionRoot.injectDependencies(services);
-
+            CompositionRoot.InjectDependencies(services);
+            services.AddSingleton(BuildLogger(Configuration));
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
