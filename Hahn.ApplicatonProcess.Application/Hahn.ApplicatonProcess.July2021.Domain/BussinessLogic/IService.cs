@@ -9,8 +9,8 @@ namespace Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic
     {
         ValidationResult AddUserAsset(UserAsset userAsset);
         ActionResult<UserAsset> GetUserAsset(int id);
-        void PutUserAsset(UserAsset modifiedUserAsset);
-        void DeleteUserAsset(UserAsset userAsset);
+        int PutUserAsset(UserAsset modifiedUserAsset);
+        Task<int> DeleteUserAsset(UserAsset userAsset);
         bool UserAssetExists(int id);
     }
 }

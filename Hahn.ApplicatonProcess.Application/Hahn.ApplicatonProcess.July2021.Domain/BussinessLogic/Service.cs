@@ -41,14 +41,16 @@ namespace Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic
             return _unitOfWork.UserAssetRepository.GetUserAsset(id);
         }
 
-        public void PutUserAsset(UserAsset modifiedUserAsset)
+        public int PutUserAsset(UserAsset modifiedUserAsset)
         {
-            _unitOfWork.UserAssetRepository.UpdateUserAsset(modifiedUserAsset);
+            int updatedRows = _unitOfWork.UserAssetRepository.UpdateUserAsset(modifiedUserAsset);
+            return updatedRows;
         }
 
-        public void DeleteUserAsset(UserAsset userAsset)
+        public async Task<int> DeleteUserAsset(UserAsset userAsset)
         {
-            _unitOfWork.UserAssetRepository.DeleteUserAsset(userAsset);
+            int deletedRows =  await _unitOfWork.UserAssetRepository.DeleteUserAsset(userAsset);
+            return deletedRows;
         }
 
         public bool UserAssetExists(int id)

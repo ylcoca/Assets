@@ -1,5 +1,6 @@
 ﻿using Hahn.ApplicatonProcess.July2021.Core.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Hahn.ApplicatonProcess.July2021.Data
 {
@@ -13,9 +14,8 @@ namespace Hahn.ApplicatonProcess.July2021.Data
         {
 
         }
-        public DbSet<UserAsset> UserAsset { get; set; }
-        public DbSet<Asset> Asset { get; set; }
-        public DbSet<User> User { get; set; }
-        
+        public virtual DbSet<UserAsset> UserAsset { get; set; }
+        public virtual DbSet<Asset> Asset { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }

@@ -26,6 +26,16 @@ namespace Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic.Tests
             _unitOfWork.Setup(m => m.UserAssetRepository.InsertUserAsset(It.IsAny<UserAsset>()));
             _unitOfWork.Setup(m => m.UserAssetRepository.GetUserAsset(It.IsAny<int>())).Returns(UserAssetMock.UserAsset());
 
+            Task<int> taskIntReturn = Task<int>.Factory.StartNew(() =>
+            {
+                return 1;
+            });
+            
+            _unitOfWork.Setup(m => m.UserAssetRepository.DeleteUserAsset(It.IsAny<UserAsset>())).Returns(taskIntReturn);
+
+
+            _unitOfWork.Setup(m => m.UserAssetRepository.UpdateUserAsset(It.IsAny<UserAsset>())).Returns(1);
+
             service = new Service(_unitOfWork.Object);
         }
 
@@ -45,27 +55,24 @@ namespace Hahn.ApplicatonProcess.July2021.Domain.BussinessLogic.Tests
         }
 
         [TestMethod()]
-        public void GetUserAssetTest()
+        public void GetUserAsset_On_Successs_Test()
         {
-            Assert.Fail();
+            var userAsset = service.GetUserAsset(1);
+            Assert.AreEqual(userAsset.Value.Asset.Name, UserAssetMock.UserAsset().Asset.Name);
         }
 
         [TestMethod()]
         public void PutUserAssetTest()
         {
-            Assert.Fail();
+            var modified = service.PutUserAsset(UserAssetMock.UserAsset());
+            Assert.AreEqual(1, modified);
         }
 
         [TestMethod()]
         public void DeleteUserAssetTest()
         {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void UserAssetExistsTest()
-        {
-            Assert.Fail();
+            var deleted = service.DeleteUserAsset(UserAssetMock.UserAsset());
+            Assert.AreEqual(1, deleted.Result);
         }
 
     }

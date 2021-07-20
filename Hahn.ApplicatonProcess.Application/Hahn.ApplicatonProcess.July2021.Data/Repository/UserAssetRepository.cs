@@ -16,10 +16,11 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository
             this.context = context;
         }
 
-        public async Task DeleteUserAsset(UserAsset userAsset)
+        public async Task<int> DeleteUserAsset(UserAsset userAsset)
         {
             context.UserAsset.Remove(userAsset);
-            await context.SaveChangesAsync();
+            int num =  await context.SaveChangesAsync();
+            return num;
         }
 
         public ActionResult<UserAsset> GetUserAsset(int Id)
@@ -28,21 +29,20 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository
             {
                 return context.UserAsset.Include("Asset").Include("Asset.User").Where(ua => ua.ID == Id).FirstOrDefault();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 throw;
-            }
-            
+            }         
             
         }
 
-        public async Task<ActionResult<int>> InsertUserAsset(UserAsset userAsset)
+        public int InsertUserAsset(UserAsset userAsset)
         {
             try
             {
                 context.UserAsset.Add(userAsset);
-                int rowsAffected = await context.SaveChangesAsync();
+                int rowsAffected = context.SaveChanges();
                 return rowsAffected;
             }
             catch (Exception)
@@ -53,12 +53,14 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository
             
         }
 
-        public void UpdateUserAsset(UserAsset userAsset)
+        public int UpdateUserAsset(UserAsset userAsset)
         {
-            try
-            {
-                context.Entry(userAsset).State = EntityState.Modified;
-                context.SaveChanges();
+            try { 
+
+
+            context.UserAsset.Update(userAsset);
+            int affectedRows = context.SaveChanges();
+            return affectedRows;
             }
             catch (Exception)
             {

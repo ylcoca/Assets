@@ -13,7 +13,7 @@ namespace Hahn.ApplicatonProcess.July2021.Data
         }
 
         public IUserAssetRepository UserAssetRepository
-        {
+        { //locking
             get
             {
                 if (_userAssetRepository == null)

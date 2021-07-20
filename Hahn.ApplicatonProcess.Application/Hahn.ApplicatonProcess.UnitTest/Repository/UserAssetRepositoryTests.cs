@@ -1,14 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hahn.ApplicatonProcess.July2021.Data.Repository;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using Hahn.ApplicatonProcess.July2021.Core.Model;
 using Hahn.ApplicatonProcess.UnitTest.Mocks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hahn.ApplicatonProcess.July2021.Data.Repository.Tests
 {
@@ -16,46 +14,51 @@ namespace Hahn.ApplicatonProcess.July2021.Data.Repository.Tests
     public class UserAssetRepositoryTests
     {
         private IUserAssetRepository _repository;
-        private Mock<DBContext> _context;
+        private Mock<DBContext> mockContext;
+        private Mock<DbSet<UserAsset>> mockSet;
+
 
         [TestInitialize()]
         public void InitializeTest()
-        {
-            _context = new Mock<DBContext>();
-            _context.Setup(m => m.UserAsset.Add(It.IsAny<UserAsset>()));
-            //_context.Setup(m => m.UserAsset.GetUserAsset(It.IsAny<int>())).Returns(UserAsset());
+        {   
+            mockSet = new Mock<DbSet<UserAsset>>();
 
-            _repository = new UserAssetRepository(_context.Object);
+            mockContext = new Mock<DBContext>();
+            mockContext.Setup(m => m.UserAsset).Returns(mockSet.Object);
+
+            _repository = new UserAssetRepository(mockContext.Object);
+           
         }
         [TestMethod()]
         public void InsertUserAssetTest()
         {
-            Task<ActionResult<int>> rowsAffected =  _repository.InsertUserAsset(UserAssetMock.UserAsset());
-            Assert.Fail();
+            
+            _repository.InsertUserAsset(UserAssetMock.UserAsset());
+            mockSet.Verify(m => m.Add(It.IsAny<UserAsset>()), Times.Once());
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
 
         [TestMethod()]
         public void DeleteUserAssetTest()
         {
-            Assert.Fail();
+            _repository.InsertUserAsset(UserAssetMock.UserAsset());
+            mockSet.Verify(m => m.Remove(It.IsAny<UserAsset>()), Times.Once());
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
 
         [TestMethod()]
         public void GetUserAssetTest()
         {
-            Assert.Fail();
+            _repository.GetUserAsset(It.IsAny<int>());
+            mockSet.Verify(m => m.Include(It.IsAny<string>()), Times.AtLeastOnce());
         }        
 
         [TestMethod()]
         public void UpdateUserAssetTest()
         {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void UserAssetExistsTest()
-        {
-            Assert.Fail();
+            _repository.UpdateUserAsset(UserAssetMock.UserAsset());
+            mockSet.Verify(m => m.Update(It.IsAny<UserAsset>()), Times.Once());
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
     }
 }
